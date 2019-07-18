@@ -7,4 +7,4 @@ function Get-RandomHex {
     (new-object System.Runtime.Remoting.Metadata.W3cXsd2001.SoapHexBinary @(,$bytes)).ToString()
 }
 
-Get-RandomHex -Bits 24
+Get-RandomHex -Bits 128
