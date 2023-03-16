@@ -1,10 +1,14 @@
-function Get-RandomHex {
+function Get-RandomHexString {
     param(
-        [int] $Bits = 256
+        [int] $BitLength = 256
     )
-    $bytes = new-object 'System.Byte[]' ($Bits/8)
-    (new-object System.Security.Cryptography.RNGCryptoServiceProvider).GetBytes($bytes)
-    (new-object System.Runtime.Remoting.Metadata.W3cXsd2001.SoapHexBinary @(,$bytes)).ToString()
+    $byteLength = $BitLength / 8
+    $bytes = New-Object 'System.Byte[]' $byteLength
+    $rngCryptoProvider = New-Object System.Security.Cryptography.RNGCryptoServiceProvider
+    $rngCryptoProvider.GetBytes($bytes)
+    $hexBinary = New-Object System.Runtime.Remoting.Metadata.W3cXsd2001.SoapHexBinary -ArgumentList @(,$bytes)
+    
+    return $hexBinary.ToString()
 }
 
-Get-RandomHex -Bits 128
+Get-RandomHexString -BitLength 128
